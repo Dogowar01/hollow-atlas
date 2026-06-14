@@ -34,6 +34,9 @@ jobs:
       - name: Add .nojekyll (prevents GitHub from ignoring _expo folder)
         run: touch dist/.nojekyll
 
+      - name: Add Apple touch icon for iOS Add to Home Screen
+        run: cp assets/icons/icon.png dist/apple-touch-icon.png
+
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
         with:
