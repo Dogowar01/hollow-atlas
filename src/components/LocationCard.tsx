@@ -3,39 +3,39 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Location } from '../types';
-import { Colors, Fonts, Spacing, CategoryColors, CategoryDarkBg } from '../constants/theme';
-import { CategoryBadge } from './CategoryBadge';
+import { Colors, Fonts, Spacing, CategoryColors, CategoryDarkBg, CategoryLabels } from '../constants/theme';
 
 interface Props {
   location: Location;
   style?: object;
 }
 
-function SignalBars({ count, color }: { count: number; color: string }) {
-  const filled = count >= 40 ? 5 : count >= 22 ? 4 : count >= 10 ? 3 : count >= 4 ? 2 : 1;
+function ThreatBars({ count, color }: { count: number; color: string }) {
+  const level = count >= 40 ? 5 : count >= 22 ? 4 : count >= 10 ? 3 : count >= 4 ? 2 : 1;
   return (
-    <View style={signal.wrapper}>
-      {([1, 2, 3, 4, 5] as const).map(i => (
+    <View style={bars.row}>
+      {[1, 2, 3, 4, 5].map(i => (
         <View
           key={i}
-          style={[
-            signal.bar,
-            {
-              height: 3 + i * 2,
-              backgroundColor: color,
-              opacity: i <= filled ? 0.28 + i * 0.14 : 0.1,
-            },
-          ]}
+          style={[bars.bar, {
+            height: 4 + i * 2,
+            backgroundColor: i <= level ? color : Colors.surface3,
+            opacity: i <= level ? 0.7 + i * 0.06 : 0.4,
+          }]}
         />
       ))}
     </View>
   );
 }
 
+function caseRef(id: string) {
+  return id.replace(/-/g, '').slice(0, 6).toUpperCase();
+}
+
 export function LocationCard({ location, style }: Props) {
-  const router = useRouter();
+  const router  = useRouter();
   const catColor = CategoryColors[location.category];
-  const darkBg = CategoryDarkBg[location.category] || Colors.bg;
+  const darkBg   = CategoryDarkBg[location.category] || Colors.bg;
   const hasImage = !!location.cover_image_url;
 
   return (
@@ -44,8 +44,8 @@ export function LocationCard({ location, style }: Props) {
       onPress={() => router.push(`/location/${location.slug || location.id}` as any)}
       activeOpacity={0.72}
     >
-      {/* Image / tinted header */}
-      <View style={[styles.header, { backgroundColor: darkBg }]}>
+      {/* Cover image */}
+      <View style={[styles.cover, { backgroundColor: darkBg }]}>
         {hasImage && (
           <Image
             source={{ uri: location.cover_image_url! }}
@@ -53,55 +53,55 @@ export function LocationCard({ location, style }: Props) {
             resizeMode="cover"
           />
         )}
-        {/* Overlay */}
-        <View style={[StyleSheet.absoluteFillObject, {
-          backgroundColor: hasImage ? 'rgba(12,10,7,0.48)' : catColor + '14',
-        }]} />
-        {/* Scrim at top so badge is readable */}
-        <View style={styles.headerScrim} />
+        <View style={[StyleSheet.absoluteFillObject, styles.coverOverlay,
+          { backgroundColor: hasImage ? 'rgba(8,7,5,0.52)' : catColor + '16' }
+        ]} />
 
-        <View style={styles.headerFooter}>
-          <CategoryBadge category={location.category} size="sm" />
-          {location.verified && (
-            <View style={styles.verifiedRow}>
-              <Feather name="check-circle" size={9} color={catColor} />
-              <Text style={[styles.verifiedText, { color: catColor }]}>VERIFIED</Text>
-            </View>
-          )}
+        {/* Category label — top left */}
+        <View style={[styles.categoryTag, { borderColor: catColor + '60', backgroundColor: darkBg + 'DD' }]}>
+          <View style={[styles.categoryDot, { backgroundColor: catColor }]} />
+          <Text style={[styles.categoryText, { color: catColor }]}>
+            {CategoryLabels[location.category]}
+          </Text>
         </View>
+
+        {/* Verified — top right */}
+        {location.verified && (
+          <View style={styles.verifiedTag}>
+            <Feather name="check" size={8} color={Colors.amberDim} />
+          </View>
+        )}
       </View>
 
-      {/* Thin category accent line below image */}
-      <View style={[styles.accentLine, { backgroundColor: catColor + '60' }]} />
+      {/* 1px accent line */}
+      <View style={[styles.accent, { backgroundColor: catColor }]} />
 
       {/* Body */}
       <View style={styles.body}>
+
+        {/* Case ref + state */}
+        <View style={styles.caseRow}>
+          <Text style={styles.caseRef}>CASE #{caseRef(location.id)}</Text>
+          {location.state && (
+            <Text style={styles.state}>{location.state}</Text>
+          )}
+        </View>
+
         <Text style={styles.name} numberOfLines={2}>{location.name}</Text>
         <Text style={styles.tagline} numberOfLines={2}>{location.tagline}</Text>
 
-        <View style={styles.metaRow}>
-          <SignalBars count={location.report_count} color={catColor} />
-          <Text style={styles.metaText}>{location.report_count} REPORTS</Text>
-          {location.state && (
-            <>
-              <Text style={styles.metaDot}>·</Text>
-              <Text style={styles.metaText}>{location.state}</Text>
-            </>
-          )}
-          {location.distance_label && (
-            <>
-              <Text style={styles.metaDot}>·</Text>
-              <Text style={styles.metaText}>{location.distance_label}</Text>
-            </>
-          )}
+        {/* Threat meter + report count */}
+        <View style={styles.footer}>
+          <ThreatBars count={location.report_count} color={catColor} />
+          <Text style={styles.reportCount}>{location.report_count} REPORTS</Text>
         </View>
       </View>
     </TouchableOpacity>
   );
 }
 
-const signal = StyleSheet.create({
-  wrapper: { flexDirection: 'row', alignItems: 'flex-end', gap: 2 },
+const bars = StyleSheet.create({
+  row: { flexDirection: 'row', alignItems: 'flex-end', gap: 2 },
   bar: { width: 3, borderRadius: 1 },
 });
 
@@ -114,39 +114,57 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.md,
     overflow: 'hidden',
   },
-  header: {
-    height: 152,
-    justifyContent: 'flex-end',
-    padding: Spacing.sm,
-    overflow: 'hidden',
-  },
-  headerScrim: {
+
+  // ── Cover ──────────────────────────────────────
+  cover: { height: 155, overflow: 'hidden', position: 'relative' },
+  coverOverlay: { ...StyleSheet.absoluteFillObject as any },
+  categoryTag: {
     position: 'absolute',
-    top: 0, left: 0, right: 0,
-    height: 48,
-    backgroundColor: 'rgba(0,0,0,0.22)',
+    top: 10, left: 10,
+    flexDirection: 'row', alignItems: 'center', gap: 5,
+    borderWidth: 1,
+    paddingHorizontal: 7, paddingVertical: 3,
   },
-  headerFooter: {
+  categoryDot: { width: 5, height: 5, borderRadius: 2.5 },
+  categoryText: { fontFamily: Fonts.uiBold, fontSize: 8, letterSpacing: 1.5 },
+  verifiedTag: {
+    position: 'absolute', top: 10, right: 10,
+    width: 18, height: 18,
+    borderWidth: 1, borderColor: Colors.amberDim + '70',
+    alignItems: 'center', justifyContent: 'center',
+    backgroundColor: Colors.surface1 + 'CC',
+  },
+
+  accent: { height: 1, opacity: 0.5 },
+
+  // ── Body ───────────────────────────────────────
+  body: { paddingHorizontal: Spacing.base, paddingTop: 12, paddingBottom: 14 },
+
+  caseRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-end',
+    alignItems: 'center',
+    marginBottom: 8,
   },
-  verifiedRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  verifiedText: { fontFamily: Fonts.uiBold, fontSize: 8, letterSpacing: 0.8 },
-
-  accentLine: { height: 1 },
-
-  body: {
-    padding: Spacing.base,
-    paddingTop: 14,
-    paddingBottom: Spacing.base,
+  caseRef: {
+    fontFamily: Fonts.uiBold,
+    fontSize: 8,
+    color: Colors.textMuted,
+    letterSpacing: 2,
   },
+  state: {
+    fontFamily: Fonts.uiBold,
+    fontSize: 8,
+    color: Colors.amberDim,
+    letterSpacing: 1.8,
+  },
+
   name: {
     fontFamily: Fonts.displaySemiBold,
     fontSize: 22,
     color: Colors.textPrimary,
     lineHeight: 27,
-    marginBottom: 6,
+    marginBottom: 5,
   },
   tagline: {
     fontFamily: Fonts.displayItalic,
@@ -155,7 +173,12 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     marginBottom: 12,
   },
-  metaRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  metaText: { fontFamily: Fonts.ui, fontSize: 9, color: Colors.textMuted, letterSpacing: 0.8 },
-  metaDot: { fontFamily: Fonts.ui, fontSize: 9, color: Colors.textMuted },
+
+  footer: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  reportCount: {
+    fontFamily: Fonts.uiBold,
+    fontSize: 8.5,
+    color: Colors.textMuted,
+    letterSpacing: 1.2,
+  },
 });
