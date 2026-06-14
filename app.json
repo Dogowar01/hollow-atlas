@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "Hollow Atlas",
+    "slug": "hollow-atlas",
+    "scheme": "hollowatlas",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0C0A07"
+    },
+    "ios": {
+      "bundleIdentifier": "com.hollowatlas.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Hollow Atlas uses your location to show nearby places."
+      }
+    },
+    "android": {
+      "package": "com.hollowatlas.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0C0A07"
+      },
+      "permissions": ["ACCESS_FINE_LOCATION"]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-location",
+        { "locationWhenInUsePermission": "Show nearby locations on the Atlas." }
+      ]
+    ]
+  }
+}

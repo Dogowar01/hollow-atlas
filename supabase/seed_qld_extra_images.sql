@@ -1,0 +1,16 @@
+-- HOLLOW ATLAS — Queensland Extra Cover Images (Picsum, idempotent)
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/st-helena-island-qld/800/500?grayscale'       WHERE slug = 'st-helena-island-qld';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/nudgee-cemetery-brisbane/800/500?grayscale'   WHERE slug = 'nudgee-cemetery-brisbane';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/goodna-cemetery-asylum/800/500?grayscale'     WHERE slug = 'goodna-cemetery-asylum';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/childers-palace-fire-2000/800/500?grayscale'  WHERE slug = 'childers-palace-fire-2000';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/charters-towers-excelsior/800/500?grayscale'  WHERE slug = 'charters-towers-excelsior-hotel';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/mount-coot-tha-ghost-hole/800/500?grayscale'  WHERE slug = 'mount-coot-tha-ghost-hole';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/barcaldine-tree-of-knowledge/800/500?grayscale' WHERE slug = 'barcaldine-tree-of-knowledge';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/jondaryan-woolshed-qld/800/500?grayscale'     WHERE slug = 'jondaryan-woolshed-qld';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/magnetic-island-fort/800/500?grayscale'       WHERE slug = 'magnetic-island-fort';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/glasshouse-tibrogargan/800/500?grayscale'     WHERE slug = 'glasshouse-mountains-tibrogargan';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/wolston-house-brisbane/800/500?grayscale'     WHERE slug = 'wolston-house-brisbane';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/undara-lava-tubes/800/500?grayscale'          WHERE slug = 'undara-lava-tubes';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/ravenswood-cemetery-qld/800/500?grayscale'    WHERE slug = 'ravenswood-cemetery-qld';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/grange-homestead-brisbane/800/500?grayscale'  WHERE slug = 'grange-homestead-brisbane';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/innisfail-district-hospital/800/500?grayscale' WHERE slug = 'innisfail-district-hospital';

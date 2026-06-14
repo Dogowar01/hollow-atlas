@@ -1,0 +1,16 @@
+-- HOLLOW ATLAS — Victoria Extra Cover Images (Picsum, idempotent)
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/barwon-park-mansion/800/500?grayscale'          WHERE slug = 'barwon-park-mansion';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/daylesford-convent-gallery/800/500?grayscale'   WHERE slug = 'daylesford-convent-gallery';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/gippsland-haunted-hills/800/500?grayscale'      WHERE slug = 'gippsland-haunted-hills';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/maldon-kangaroo-hotel/800/500?grayscale'        WHERE slug = 'maldon-kangaroo-hotel';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/royal-hotel-seymour-vic/800/500?grayscale'      WHERE slug = 'royal-hotel-seymour-vic';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/tahbilk-winery-cellars/800/500?grayscale'       WHERE slug = 'tahbilk-winery-cellars';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/dunolly-criterion-hotel/800/500?grayscale'      WHERE slug = 'dunolly-criterion-hotel';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/werribee-mansion-ghost/800/500?grayscale'       WHERE slug = 'werribee-mansion-ghost';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/point-lonsdale-lighthouse/800/500?grayscale'    WHERE slug = 'point-lonsdale-lighthouse';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/mount-franklin-crater-vic/800/500?grayscale'    WHERE slug = 'mount-franklin-crater-vic';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/sorrento-continental-hotel/800/500?grayscale'   WHERE slug = 'sorrento-continental-hotel';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/emu-bottom-homestead-sunbury/800/500?grayscale' WHERE slug = 'emu-bottom-homestead-sunbury';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/benalla-hume-freeway-black-spot/800/500?grayscale' WHERE slug = 'benalla-hume-freeway-black-spot';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/haunted-hills-hotel-drouin/800/500?grayscale'   WHERE slug = 'haunted-hills-hotel-drouin';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/sunbury-vineyard-cemetery/800/500?grayscale'    WHERE slug = 'sunbury-vineyard-cemetery';

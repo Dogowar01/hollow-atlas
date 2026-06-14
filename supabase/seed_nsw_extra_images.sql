@@ -1,0 +1,16 @@
+-- HOLLOW ATLAS — NSW Extra Cover Images (Picsum, idempotent)
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/picton-mushroom-tunnel/800/500?grayscale'     WHERE slug = 'picton-mushroom-tunnel';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/jenolan-caves-wiburd/800/500?grayscale'       WHERE slug = 'jenolan-caves-wiburd';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/fisher-ghost-campbelltown/800/500?grayscale'  WHERE slug = 'fisher-ghost-campbelltown';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/hyde-park-barracks-ghosts/800/500?grayscale'  WHERE slug = 'hyde-park-barracks-ghosts';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/wisemans-ferry-inn/800/500?grayscale'         WHERE slug = 'wisemans-ferry-inn';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/junee-roundhouse/800/500?grayscale'           WHERE slug = 'junee-roundhouse';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/carcoar-nsw/800/500?grayscale'                WHERE slug = 'carcoar-nsw';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/rookwood-necropolis/800/500?grayscale'        WHERE slug = 'rookwood-necropolis';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/gladesville-hospital-nsw/800/500?grayscale'   WHERE slug = 'gladesville-hospital-nsw';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/armidale-saumarez-homestead/800/500?grayscale' WHERE slug = 'armidale-saumarez-homestead';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/kiama-lighthouse-1887/800/500?grayscale'      WHERE slug = 'kiama-lighthouse-1887';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/st-albans-settlers-arms/800/500?grayscale'    WHERE slug = 'st-albans-settlers-arms';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/braidwood-nsw-colonial/800/500?grayscale'     WHERE slug = 'braidwood-nsw-colonial';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/goulburn-historic-gaol/800/500?grayscale'     WHERE slug = 'goulburn-historic-gaol';
+UPDATE public.locations SET cover_image_url = 'https://picsum.photos/seed/newcastle-signal-station/800/500?grayscale'   WHERE slug = 'newcastle-signal-station';
