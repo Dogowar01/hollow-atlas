@@ -6,6 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import { useLocation } from '../../src/hooks/useLocations';
 import { useBookmarks } from '../../src/hooks/useBookmarks';
 import { AtlasSpeaksBlock } from '../../src/components/AtlasSpeaksBlock';
+import { AtmosphericDivider } from '../../src/components/AtmosphericDivider';
 import { CategoryBadge } from '../../src/components/CategoryBadge';
 import { Colors, Fonts, Spacing, CategoryColors } from '../../src/constants/theme';
 
@@ -140,10 +141,23 @@ export default function LocationScreen() {
             )}
           </View>
 
-          {/* Coordinates */}
-          <Text style={styles.coords}>{coordStr}</Text>
+          {/* Coordinates — instrument readout */}
+          <View style={styles.coordRow}>
+            <View style={[styles.coordBox, { borderColor: catColor + '30' }]}>
+              <Text style={styles.coordLabel}>LAT</Text>
+              <Text style={styles.coordValue}>
+                {Math.abs(location.latitude).toFixed(4)}° {location.latitude < 0 ? 'S' : 'N'}
+              </Text>
+            </View>
+            <View style={[styles.coordBox, { borderColor: catColor + '30' }]}>
+              <Text style={styles.coordLabel}>LNG</Text>
+              <Text style={styles.coordValue}>
+                {Math.abs(location.longitude).toFixed(4)}° {location.longitude < 0 ? 'W' : 'E'}
+              </Text>
+            </View>
+          </View>
 
-          <View style={[styles.divider, { backgroundColor: catColor + '30' }]} />
+          <AtmosphericDivider color={catColor} style={{ marginTop: 4, marginBottom: 4 }} />
 
           {/* Body text */}
           <Text style={styles.body}>{location.body}</Text>
@@ -277,16 +291,30 @@ const styles = StyleSheet.create({
     fontSize: 9,
     color: Colors.textMuted,
   },
-  coords: {
-    fontFamily: Fonts.ui,
-    fontSize: 9,
-    color: Colors.textMuted,
-    letterSpacing: 1.1,
-    marginBottom: Spacing.lg,
+  coordRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: Spacing.sm,
   },
-  divider: {
-    height: 1,
-    marginBottom: Spacing.lg,
+  coordBox: {
+    backgroundColor: Colors.surface2,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    flex: 1,
+  },
+  coordLabel: {
+    fontFamily: Fonts.uiBold,
+    fontSize: 7.5,
+    color: Colors.textMuted,
+    letterSpacing: 2,
+    marginBottom: 2,
+  },
+  coordValue: {
+    fontFamily: Fonts.ui,
+    fontSize: 11,
+    color: Colors.textSecondary,
+    letterSpacing: 0.8,
   },
   body: {
     fontFamily: Fonts.display,

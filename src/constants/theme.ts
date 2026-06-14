@@ -7,6 +7,7 @@ export const Colors = {
   amberBright: '#E09818',
   amberDim: '#6B4508',
   rust: '#7A3220',
+  ghost: '#B8E8D2',
   textPrimary: '#EDE4D4',
   textSecondary: '#9A8C7C',
   textMuted: '#5C5248',
@@ -14,11 +15,12 @@ export const Colors = {
   borderEmphasis: 'rgba(200, 130, 10, 0.22)',
   mapWater: '#06080D',
 
-  haunted: '#8B3A2A',
-  abandoned: '#4A6741',
-  folklore: '#3A5A7A',
-  paranormal: '#6A3A7A',
-  strange_history: '#7A6A3A',
+  // Category colours — vivid and distinct
+  haunted:        '#C82828',  // blood crimson
+  abandoned:      '#3D7A5A',  // oxidized copper / verdigris
+  folklore:       '#2E689A',  // moonlit deep blue
+  paranormal:     '#7848B8',  // spectral violet
+  strange_history:'#8E7035',  // aged parchment gold
 } as const;
 
 export const Fonts = {
@@ -44,17 +46,26 @@ export const Spacing = {
 export type Category = 'haunted' | 'abandoned' | 'folklore' | 'paranormal' | 'strange_history';
 
 export const CategoryLabels: Record<Category, string> = {
-  haunted: 'HAUNTED',
-  abandoned: 'ABANDONED',
-  folklore: 'FOLKLORE',
-  paranormal: 'PARANORMAL',
-  strange_history: 'STRANGE HISTORY',
+  haunted:        'HAUNTED',
+  abandoned:      'ABANDONED',
+  folklore:       'FOLKLORE',
+  paranormal:     'PARANORMAL',
+  strange_history:'STRANGE HISTORY',
 };
 
 export const CategoryColors: Record<Category, string> = {
-  haunted: Colors.haunted,
-  abandoned: Colors.abandoned,
-  folklore: Colors.folklore,
-  paranormal: Colors.paranormal,
-  strange_history: Colors.strange_history,
+  haunted:        Colors.haunted,
+  abandoned:      Colors.abandoned,
+  folklore:       Colors.folklore,
+  paranormal:     Colors.paranormal,
+  strange_history:Colors.strange_history,
+};
+
+// Deep atmospheric card backgrounds — darker than surface2, tinted per category
+export const CategoryDarkBg: Record<Category, string> = {
+  haunted:        '#1A0606',
+  abandoned:      '#061209',
+  folklore:       '#060810',
+  paranormal:     '#0E0614',
+  strange_history:'#0C0904',
 };

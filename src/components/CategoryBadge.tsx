@@ -10,7 +10,11 @@ interface Props {
 export function CategoryBadge({ category, size = 'md' }: Props) {
   const color = CategoryColors[category];
   return (
-    <View style={[styles.badge, { borderColor: color + '50' }, size === 'sm' && styles.sm]}>
+    <View style={[
+      styles.badge,
+      { borderColor: color + '45', borderLeftColor: color, borderLeftWidth: 3 },
+      size === 'sm' && styles.sm,
+    ]}>
       <Text style={[styles.label, { color }, size === 'sm' && styles.labelSm]}>
         {CategoryLabels[category]}
       </Text>
@@ -21,15 +25,19 @@ export function CategoryBadge({ category, size = 'md' }: Props) {
 const styles = StyleSheet.create({
   badge: {
     borderWidth: 1,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
     alignSelf: 'flex-start',
   },
-  sm: { paddingHorizontal: 6, paddingVertical: 2 },
+  sm: {},
   label: {
     fontFamily: Fonts.uiBold,
     fontSize: 10,
     letterSpacing: 1.4,
+    paddingVertical: 3,
+    paddingHorizontal: 8,
   },
-  labelSm: { fontSize: 8.5 },
+  labelSm: {
+    fontSize: 8.5,
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+  },
 });

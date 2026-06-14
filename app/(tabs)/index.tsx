@@ -595,20 +595,22 @@ export default function MapScreen() {
       {showIntro && (
         <Animated.View style={[styles.intro, { opacity: introAnim }]}>
           <View style={styles.introInner}>
+            <Text style={styles.introSymbol}>◈</Text>
             <Text style={styles.introEyebrow}>FIELD GUIDE TO THE UNCANNY</Text>
-            <Text style={styles.introTitle}>Hollow Atlas</Text>
+            <Text style={styles.introTitle}>{'Hollow\nAtlas'}</Text>
+
+            {/* Decorative separator */}
+            <View style={styles.introSep}>
+              <View style={styles.introSepLine} />
+              <View style={styles.introSepDot} />
+              <View style={styles.introSepLine} />
+            </View>
+
             <Text style={styles.introTagline}>
               Haunted places. Abandoned sites.{'\n'}Folklore, paranormal, strange history.
             </Text>
-
-            <View style={styles.introDivider} />
-
-            <Text style={styles.introBody}>
-              Tap any marker on the map to read the account of a location.
-              Filter by state or category. Search by name.
-            </Text>
-            <Text style={styles.introBody2}>
-              Queensland · New South Wales · Victoria · South Australia · Western Australia · Northern Territory · Tasmania
+            <Text style={styles.introStates}>
+              {'QLD · NSW · VIC · SA · WA · NT · TAS'}
             </Text>
 
             <TouchableOpacity style={styles.introBtn} onPress={dismissIntro} activeOpacity={0.85}>
@@ -814,58 +816,71 @@ const styles = StyleSheet.create({
   introInner: {
     alignItems: 'center',
   },
+  introSymbol: {
+    fontFamily: Fonts.uiBold,
+    fontSize: 26,
+    color: Colors.amberDim,
+    letterSpacing: 6,
+    marginBottom: 20,
+  },
   introEyebrow: {
     fontFamily: Fonts.uiBold,
-    fontSize: 9,
+    fontSize: 8.5,
     color: Colors.amberDim,
-    letterSpacing: 2.5,
-    marginBottom: 16,
+    letterSpacing: 2.8,
+    marginBottom: 14,
   },
   introTitle: {
     fontFamily: Fonts.displaySemiBold,
-    fontSize: 52,
+    fontSize: 70,
     color: Colors.textPrimary,
-    lineHeight: 56,
-    marginBottom: 12,
+    lineHeight: 72,
+    textAlign: 'center',
+    letterSpacing: 1,
+  },
+  introSep: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginVertical: 28,
+    width: '65%',
+  },
+  introSepLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: Colors.amber + '38',
+  },
+  introSepDot: {
+    width: 5,
+    height: 5,
+    borderRadius: 2.5,
+    backgroundColor: Colors.amberDim,
   },
   introTagline: {
     fontFamily: Fonts.displayItalic,
-    fontSize: 18,
-    color: Colors.textSecondary,
-    textAlign: 'center',
-    lineHeight: 26,
-  },
-  introDivider: {
-    width: 40,
-    height: 1,
-    backgroundColor: Colors.amber + '50',
-    marginVertical: 28,
-  },
-  introBody: {
-    fontFamily: Fonts.display,
-    fontSize: 16,
+    fontSize: 17,
     color: Colors.textSecondary,
     textAlign: 'center',
     lineHeight: 26,
     marginBottom: 10,
   },
-  introBody2: {
+  introStates: {
     fontFamily: Fonts.ui,
-    fontSize: 10,
+    fontSize: 9,
     color: Colors.textMuted,
     textAlign: 'center',
-    letterSpacing: 0.8,
-    marginBottom: 40,
+    letterSpacing: 1.2,
+    marginBottom: 44,
   },
   introBtn: {
     backgroundColor: Colors.amber,
-    paddingHorizontal: 28,
-    paddingVertical: 14,
+    paddingHorizontal: 32,
+    paddingVertical: 15,
   },
   introBtnText: {
     fontFamily: Fonts.uiBold,
     fontSize: 12,
     color: Colors.bg,
-    letterSpacing: 1.8,
+    letterSpacing: 2,
   },
 });

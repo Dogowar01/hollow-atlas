@@ -8,13 +8,14 @@ export default function TabLayout() {
       screenOptions={{
         tabBarStyle: {
           backgroundColor: Colors.surface1,
-          borderTopColor: Colors.border,
+          borderTopColor: Colors.borderEmphasis,
           borderTopWidth: 1,
           height: 70,
           paddingBottom: 12,
         },
         tabBarActiveTintColor: Colors.amber,
         tabBarInactiveTintColor: Colors.textMuted,
+        tabBarActiveBackgroundColor: Colors.amber + '0D',
         tabBarLabelStyle: {
           fontFamily: Fonts.uiBold,
           fontSize: 8.5,
