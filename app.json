@@ -26,6 +26,14 @@
       },
       "permissions": ["ACCESS_FINE_LOCATION"]
     },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/favicon.png"
+    },
+    "experiments": {
+      "baseUrl": "/hollow-atlas"
+    },
     "plugins": [
       "expo-router",
       "expo-font",

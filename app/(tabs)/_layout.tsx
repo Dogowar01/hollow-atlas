@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
+import { Platform } from 'react-native';
 import { Colors, Fonts } from '../../src/constants/theme';
 
 export default function TabLayout() {
@@ -31,9 +32,11 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Map',
-          tabBarLabel: 'MAP',
-          tabBarIcon: ({ color, size }) => <Feather name="map" size={size} color={color} />,
+          title: Platform.select({ web: 'Atlas', default: 'Map' }),
+          tabBarLabel: Platform.select({ web: 'ATLAS', default: 'MAP' }),
+          tabBarIcon: ({ color, size }) => (
+            <Feather name={Platform.select({ web: 'book-open', default: 'map' }) as any} size={size} color={color} />
+          ),
           headerTitle: 'Hollow Atlas',
         }}
       />
