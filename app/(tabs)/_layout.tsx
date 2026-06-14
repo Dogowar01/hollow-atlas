@@ -38,6 +38,7 @@ export default function TabLayout() {
             <Feather name={Platform.select({ web: 'book-open', default: 'map' }) as any} size={size} color={color} />
           ),
           headerTitle: 'Hollow Atlas',
+          headerShown: Platform.OS !== 'web',
         }}
       />
       <Tabs.Screen
