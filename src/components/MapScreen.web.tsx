@@ -9,6 +9,7 @@ import { Colors, Fonts, Spacing, CategoryColors, Category } from '../constants/t
 import { LocationCard } from './LocationCard';
 import { ArchiveBanner } from './ArchiveBanner';
 import { CornerBrackets } from './CornerBrackets';
+import { WebMap } from './WebMap';
 
 const CATEGORIES: { label: string; value: Category | 'all' }[] = [
   { label: 'ALL',             value: 'all' },
@@ -181,6 +182,18 @@ export default function WebAtlasScreen() {
         </View>
       </View>
 
+      {/* ── Field map ───────────────────────────────────────── */}
+      <View style={[styles.mapWrap, isWide && styles.mapWrapWide]}>
+        <View style={styles.mapHeader}>
+          <Text style={styles.mapEyebrow}>◈  FIELD MAP — DOCUMENTED SITES</Text>
+          <Text style={styles.mapHint}>SELECT A MARK TO OPEN ITS RECORD</Text>
+        </View>
+        <View style={styles.mapFrame}>
+          <WebMap locations={display} height={isWide ? 500 : 360} />
+          <CornerBrackets size={14} inset={8} opacity={0.7} />
+        </View>
+      </View>
+
       {/* ── Grid ────────────────────────────────────────────── */}
       <View style={[styles.gridWrap, isWide && styles.gridWrapWide]}>
         {!loading && display.length === 0 ? (
@@ -338,6 +351,29 @@ const styles = StyleSheet.create({
   countInner: { flexDirection: 'row', alignItems: 'center', gap: 7 },
   countPulse: { width: 5, height: 5, borderRadius: 2.5, opacity: 0.85 },
   countText: { fontFamily: Fonts.uiBold, fontSize: 8.5, color: Colors.textMuted, letterSpacing: 1.6 },
+
+  // ── Field map ────────────────────────────────────────────
+  mapWrap: { width: '100%', paddingHorizontal: Spacing.base, paddingTop: Spacing.xl },
+  mapWrapWide: { maxWidth: 1100 },
+  mapHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  mapEyebrow: {
+    fontFamily: Fonts.uiBold,
+    fontSize: 9,
+    color: Colors.amberDim,
+    letterSpacing: 2.4,
+  },
+  mapHint: {
+    fontFamily: Fonts.uiBold,
+    fontSize: 8,
+    color: Colors.textMuted,
+    letterSpacing: 1.6,
+  },
+  mapFrame: { position: 'relative' },
 
   // ── Grid ─────────────────────────────────────────────────
   gridWrap: { width: '100%', paddingHorizontal: Spacing.base, paddingTop: Spacing.xl },
