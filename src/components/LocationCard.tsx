@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Location } from '../types';
 import { Colors, Fonts, Spacing, CategoryColors, CategoryDarkBg, CategoryLabels } from '../constants/theme';
+import { CornerBrackets } from './CornerBrackets';
 
 interface Props {
   location: Location;
@@ -29,7 +30,7 @@ function ThreatBars({ count, color }: { count: number; color: string }) {
 }
 
 function caseRef(id: string) {
-  return id.replace(/-/g, '').slice(0, 6).toUpperCase();
+  return id.replace(/-/g, '').slice(-6).toUpperCase();
 }
 
 export function LocationCard({ location, style }: Props) {
@@ -71,6 +72,9 @@ export function LocationCard({ location, style }: Props) {
             <Feather name="check" size={8} color={Colors.amberDim} />
           </View>
         )}
+
+        {/* Reticle corners */}
+        <CornerBrackets color={catColor} size={11} inset={5} opacity={0.55} />
       </View>
 
       {/* 1px accent line */}
@@ -90,10 +94,15 @@ export function LocationCard({ location, style }: Props) {
         <Text style={styles.name} numberOfLines={2}>{location.name}</Text>
         <Text style={styles.tagline} numberOfLines={2}>{location.tagline}</Text>
 
-        {/* Threat meter + report count */}
+        {/* Threat meter + report count + coordinates */}
+        <View style={styles.footerRule} />
         <View style={styles.footer}>
           <ThreatBars count={location.report_count} color={catColor} />
           <Text style={styles.reportCount}>{location.report_count} REPORTS</Text>
+          <View style={{ flex: 1 }} />
+          <Text style={styles.coords}>
+            {Math.abs(location.latitude).toFixed(2)}°S · {Math.abs(location.longitude).toFixed(2)}°E
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -174,11 +183,23 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
 
+  footerRule: {
+    height: 1,
+    backgroundColor: Colors.border,
+    marginBottom: 10,
+  },
   footer: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   reportCount: {
     fontFamily: Fonts.uiBold,
     fontSize: 8.5,
     color: Colors.textMuted,
     letterSpacing: 1.2,
+  },
+  coords: {
+    fontFamily: Fonts.ui,
+    fontSize: 8.5,
+    color: Colors.textMuted,
+    letterSpacing: 1,
+    opacity: 0.8,
   },
 });

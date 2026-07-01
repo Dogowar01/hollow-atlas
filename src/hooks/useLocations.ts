@@ -24,6 +24,28 @@ function injectDistances(locations: Location[], userCoords: Coords | null | unde
   }));
 }
 
+function filterArchive(
+  category?: string,
+  state?: string | null,
+  bounds?: Bounds | null,
+): Location[] {
+  let data = MOCK_LOCATIONS;
+
+  if (category && category !== 'all') {
+    data = data.filter(l => l.category === category);
+  }
+  if (state && state !== 'ALL') {
+    data = data.filter(l => l.state === state);
+  }
+  if (bounds) {
+    data = data.filter(l =>
+      l.latitude >= bounds.south && l.latitude <= bounds.north &&
+      l.longitude >= bounds.west && l.longitude <= bounds.east
+    );
+  }
+  return data;
+}
+
 export function useLocations(
   category?: string,
   userCoords?: Coords | null,
@@ -33,28 +55,15 @@ export function useLocations(
   const [locations, setLocations] = useState<Location[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [offline, setOffline] = useState(false);
 
   useEffect(() => {
     async function fetchLocations() {
       setLoading(true);
       try {
         if (USE_MOCK) {
-          let data = MOCK_LOCATIONS;
-
-          if (category && category !== 'all') {
-            data = data.filter(l => l.category === category);
-          }
-          if (state && state !== 'ALL') {
-            data = data.filter(l => l.state === state);
-          }
-          if (bounds) {
-            data = data.filter(l =>
-              l.latitude >= bounds.south && l.latitude <= bounds.north &&
-              l.longitude >= bounds.west && l.longitude <= bounds.east
-            );
-          }
-
-          setLocations(injectDistances(data, userCoords));
+          setLocations(injectDistances(filterArchive(category, state, bounds), userCoords));
+          setOffline(true);
         } else {
           let query = supabase
             .from('locations')
@@ -79,8 +88,14 @@ export function useLocations(
           const { data, error } = await query;
           if (error) throw error;
           setLocations(injectDistances(data || [], userCoords));
+          setOffline(false);
+          setError(null);
         }
       } catch (e: any) {
+        // The archive is unreachable (paused project, no network) — fall back
+        // to the bundled field archive so the app keeps working.
+        setLocations(injectDistances(filterArchive(category, state, bounds), userCoords));
+        setOffline(true);
         setError(e.message);
       } finally {
         setLoading(false);
@@ -90,7 +105,7 @@ export function useLocations(
     fetchLocations();
   }, [category, state, userCoords?.latitude, userCoords?.longitude, bounds?.north, bounds?.south, bounds?.east, bounds?.west]);
 
-  return { locations, loading, error };
+  return { locations, loading, error, offline };
 }
 
 export function useLocation(slug: string) {
@@ -99,19 +114,26 @@ export function useLocation(slug: string) {
 
   useEffect(() => {
     async function fetch() {
+      const fromArchive = () =>
+        MOCK_LOCATIONS.find(l => l.slug === slug || l.id === slug) || null;
+
       if (USE_MOCK) {
-        setLocation(MOCK_LOCATIONS.find(l => l.slug === slug || l.id === slug) || null);
+        setLocation(fromArchive());
         setLoading(false);
         return;
       }
 
-      const { data, error } = await supabase
-        .from('locations')
-        .select('*')
-        .eq('slug', slug)
-        .single();
+      try {
+        const { data, error } = await supabase
+          .from('locations')
+          .select('*')
+          .eq('slug', slug)
+          .single();
 
-      if (!error) setLocation(data);
+        setLocation(error || !data ? fromArchive() : data);
+      } catch {
+        setLocation(fromArchive());
+      }
       setLoading(false);
     }
     fetch();

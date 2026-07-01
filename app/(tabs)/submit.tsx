@@ -44,6 +44,7 @@ export default function SubmitScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <Text style={styles.eyebrow}>◈  FIELD REPORT — FORM 13</Text>
       <Text style={styles.heading}>Submit a Sighting</Text>
       <Text style={styles.sub}>What did you witness? The Atlas will carry it forward.</Text>
 
@@ -116,6 +117,7 @@ export default function SubmitScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.bg },
   content: { padding: Spacing.lg, paddingBottom: 44 },
+  eyebrow: { fontFamily: Fonts.uiBold, fontSize: 9, color: Colors.amberDim, letterSpacing: 2.4, marginBottom: 8 },
   heading: { fontFamily: Fonts.displaySemiBold, fontSize: 28, color: Colors.textPrimary, marginBottom: 6 },
   sub: { fontFamily: Fonts.displayItalic, fontSize: 15, color: Colors.textSecondary, lineHeight: 22 },
   divider: { height: 1, backgroundColor: Colors.border, marginVertical: Spacing.lg },

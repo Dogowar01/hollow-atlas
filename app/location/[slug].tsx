@@ -8,6 +8,7 @@ import { useBookmarks } from '../../src/hooks/useBookmarks';
 import { AtlasSpeaksBlock } from '../../src/components/AtlasSpeaksBlock';
 import { AtmosphericDivider } from '../../src/components/AtmosphericDivider';
 import { CategoryBadge } from '../../src/components/CategoryBadge';
+import { CornerBrackets } from '../../src/components/CornerBrackets';
 import { Colors, Fonts, Spacing, CategoryColors } from '../../src/constants/theme';
 
 const headerBg: Record<string, string> = {
@@ -101,16 +102,28 @@ export default function LocationScreen() {
             },
           ]} />
 
-          {/* Top-left badge */}
+          {/* Top row — badge + verified stamp */}
           <View style={styles.headerTop}>
             <CategoryBadge category={location.category} />
+            {location.verified && (
+              <View style={[styles.stamp, { borderColor: catColor + '70' }]}>
+                <Text style={[styles.stampText, { color: catColor }]}>VERIFIED{'\n'}SIGHTING</Text>
+              </View>
+            )}
           </View>
 
           {/* Name + tagline pinned to bottom */}
           <View style={styles.headerBottom}>
+            <Text style={styles.caseLine}>
+              CASE #{location.id.replace(/-/g, '').slice(-6).toUpperCase()}
+              {location.state ? `  ·  ${location.state}` : ''}
+            </Text>
             <Text style={styles.headerName}>{location.name}</Text>
             <Text style={styles.headerTagline}>{location.tagline}</Text>
           </View>
+
+          {/* Reticle corners */}
+          <CornerBrackets color={catColor} size={14} inset={10} opacity={0.5} />
 
           {/* Gradient fade into content */}
           <LinearGradient
@@ -208,6 +221,10 @@ export default function LocationScreen() {
             </TouchableOpacity>
           </View>
 
+          {/* End of record */}
+          <AtmosphericDivider color={catColor} style={{ marginTop: Spacing.xxl, marginBottom: 6 }} />
+          <Text style={styles.endOfRecord}>END OF RECORD — THE ATLAS REMEMBERS</Text>
+
         </View>
       </ScrollView>
     </>
@@ -243,6 +260,30 @@ const styles = StyleSheet.create({
   },
   headerTop: {
     paddingHorizontal: Spacing.lg,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  stamp: {
+    borderWidth: 1.5,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    transform: [{ rotate: '6deg' }],
+    opacity: 0.85,
+  },
+  stampText: {
+    fontFamily: Fonts.uiSeventy,
+    fontSize: 8,
+    letterSpacing: 2.4,
+    textAlign: 'center',
+    lineHeight: 12,
+  },
+  caseLine: {
+    fontFamily: Fonts.uiBold,
+    fontSize: 8.5,
+    color: Colors.amberDim,
+    letterSpacing: 2.2,
+    marginBottom: 10,
   },
   headerBottom: {
     paddingHorizontal: Spacing.lg,
@@ -345,5 +386,13 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: Colors.textMuted,
     letterSpacing: 1.2,
+  },
+  endOfRecord: {
+    fontFamily: Fonts.uiBold,
+    fontSize: 8,
+    color: Colors.textMuted,
+    letterSpacing: 2.6,
+    textAlign: 'center',
+    opacity: 0.8,
   },
 });

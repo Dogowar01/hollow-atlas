@@ -7,6 +7,7 @@ import { Feather } from '@expo/vector-icons';
 import { useLocations } from '../../src/hooks/useLocations';
 import { useUserLocation } from '../../src/context/UserLocationContext';
 import { LocationCard } from '../../src/components/LocationCard';
+import { ArchiveBanner } from '../../src/components/ArchiveBanner';
 import { haversineKm } from '../../src/utils/distance';
 import {
   Colors, Fonts, Spacing, CategoryLabels, CategoryColors, Category,
@@ -22,7 +23,7 @@ export default function DiscoverScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const { coords } = useUserLocation();
 
-  const { locations, loading } = useLocations(
+  const { locations, loading, offline } = useLocations(
     activeCategory === 'all' ? undefined : activeCategory,
     coords,
   );
@@ -54,6 +55,11 @@ export default function DiscoverScreen() {
   return (
     <View style={styles.container}>
 
+      {/* ── Offline notice ─────────────────────────────────────── */}
+      {offline && !loading && (
+        <ArchiveBanner style={{ marginHorizontal: Spacing.base, marginTop: Spacing.md }} />
+      )}
+
       {/* ── Search bar ─────────────────────────────────────────── */}
       <View style={styles.searchRow}>
         <Feather name="search" size={13} color={Colors.textMuted} />
@@ -79,6 +85,7 @@ export default function DiscoverScreen() {
         data={CATEGORIES}
         keyExtractor={c => c}
         showsHorizontalScrollIndicator={false}
+        style={styles.catList}
         contentContainerStyle={styles.catRow}
         renderItem={({ item: cat }) => {
           const isActive = activeCategory === cat;
@@ -204,10 +211,14 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
   },
 
+  catList: {
+    flexGrow: 0,
+  },
   catRow: {
     paddingHorizontal: Spacing.base,
     paddingVertical: Spacing.md,
     gap: 8,
+    alignItems: 'center',
   },
   catPill: {
     flexDirection: 'row',

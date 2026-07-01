@@ -7,6 +7,8 @@ import { Feather } from '@expo/vector-icons';
 import { useLocations } from '../hooks/useLocations';
 import { Colors, Fonts, Spacing, CategoryColors, Category } from '../constants/theme';
 import { LocationCard } from './LocationCard';
+import { ArchiveBanner } from './ArchiveBanner';
+import { CornerBrackets } from './CornerBrackets';
 
 const CATEGORIES: { label: string; value: Category | 'all' }[] = [
   { label: 'ALL',             value: 'all' },
@@ -40,7 +42,7 @@ export default function WebAtlasScreen() {
   const category    = activeCategory === 'all' ? undefined : activeCategory;
   const stateFilter = activeState    === 'ALL' ? undefined : activeState;
 
-  const { locations, loading, error } = useLocations(category, null, null, stateFilter);
+  const { locations, loading, offline } = useLocations(category, null, null, stateFilter);
 
   const display = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -59,7 +61,10 @@ export default function WebAtlasScreen() {
 
       {/* ── Hero ────────────────────────────────────────────── */}
       <View style={styles.hero}>
-        <Text style={styles.transmissionLine}>◈ ── SIGNAL ACQUIRED ── ◈</Text>
+        <CornerBrackets size={16} inset={18} opacity={0.5} />
+        <Text style={styles.transmissionLine}>
+          {offline ? '◈ ── ARCHIVE MODE ── ◈' : '◈ ── SIGNAL ACQUIRED ── ◈'}
+        </Text>
         <Text style={styles.eyebrow}>RESTRICTED — PARANORMAL FIELD DOCUMENTATION</Text>
 
         <Text style={[
@@ -98,13 +103,8 @@ export default function WebAtlasScreen() {
       <View style={styles.stickyWrap as any}>
         <View style={[styles.controls, isWide && styles.controlsWide]}>
 
-          {/* Error banner */}
-          {error && (
-            <View style={styles.errorBanner}>
-              <Feather name="alert-triangle" size={11} color={Colors.haunted} />
-              <Text style={styles.errorText}>SIGNAL LOST — {error.toUpperCase()}</Text>
-            </View>
-          )}
+          {/* Offline / archive banner */}
+          {offline && !loading && <ArchiveBanner />}
 
           {/* Search */}
           <View style={styles.searchRow}>
@@ -187,19 +187,12 @@ export default function WebAtlasScreen() {
           <View style={styles.empty}>
             <Text style={styles.emptyGlyph}>◈</Text>
             <Text style={styles.emptyTitle}>
-              {error
-                ? 'CONNECTION FAILED'
-                : searchQuery
-                  ? 'NO RESULTS FOUND'
-                  : 'NO CASES ON RECORD'
-              }
+              {searchQuery ? 'NO RESULTS FOUND' : 'NO CASES ON RECORD'}
             </Text>
             <Text style={styles.emptyBody}>
-              {error
-                ? 'The archive is unreachable. Your Supabase project may be paused — visit dashboard.supabase.com to resume it.'
-                : searchQuery
-                  ? `Nothing matching "${searchQuery}" in the archive.`
-                  : 'No active cases match this filter.'
+              {searchQuery
+                ? `Nothing matching "${searchQuery}" in the archive.`
+                : 'No active cases match this filter. The Atlas keeps its silences — try another region.'
               }
             </Text>
           </View>
@@ -309,24 +302,6 @@ const styles = StyleSheet.create({
     gap: 9,
   },
   controlsWide: { maxWidth: 1100 },
-
-  errorBanner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: Colors.crimson + '18',
-    borderWidth: 1,
-    borderColor: Colors.crimson + '40',
-    paddingHorizontal: 10,
-    paddingVertical: 7,
-  },
-  errorText: {
-    fontFamily: Fonts.uiBold,
-    fontSize: 8.5,
-    color: Colors.haunted,
-    letterSpacing: 1.2,
-    flex: 1,
-  },
 
   searchRow: {
     flexDirection: 'row',

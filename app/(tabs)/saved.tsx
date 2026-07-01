@@ -25,6 +25,12 @@ export default function SavedScreen() {
 
         ListHeaderComponent={
           <>
+            {/* ── Dossier header ──────────────────────────────── */}
+            <View style={styles.dossierHeader}>
+              <Text style={styles.dossierEyebrow}>◈  PERSONAL DOSSIER</Text>
+              <Text style={styles.dossierSub}>Sites you have marked for return.</Text>
+            </View>
+
             {/* ── Sign-in nudge for guests ─────────────────────── */}
             {!user && (
               <TouchableOpacity
@@ -90,6 +96,25 @@ const styles = StyleSheet.create({
     padding: Spacing.base,
     paddingBottom: 40,
     flexGrow: 1,
+  },
+
+  dossierHeader: {
+    marginBottom: Spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+    paddingBottom: Spacing.md,
+  },
+  dossierEyebrow: {
+    fontFamily: Fonts.uiBold,
+    fontSize: 9,
+    color: Colors.amberDim,
+    letterSpacing: 2.4,
+    marginBottom: 5,
+  },
+  dossierSub: {
+    fontFamily: Fonts.displayItalic,
+    fontSize: 14,
+    color: Colors.textSecondary,
   },
 
   // Guest nudge banner

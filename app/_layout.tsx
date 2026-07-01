@@ -46,7 +46,9 @@ export default function RootLayout() {
           contentStyle: { backgroundColor: Colors.bg },
           headerShadowVisible: false,
         }}
-      />
+      >
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
       </UserLocationProvider>
     </AuthProvider>
   );
